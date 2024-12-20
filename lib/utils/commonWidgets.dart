@@ -59,6 +59,48 @@ InputDecoration commonInputDecoration({String? hintText, Color? suffixIconColor,
   );
 }
 
+Widget commonDropdown({
+  final String? title,
+  final String? dropdownValue,
+  final String? hintText,
+  required List<DropdownMenuItem<String>> dropDownList,
+  Function(String?)? onChanged,
+  final String? Function(String?)? validator,
+  final Widget? prefixIcon,
+  final FocusNode? currentFocus,
+  final FocusNode? nextFocus,
+  void Function()? onTap,
+  final String? Function(String?)? onSaved,
+  final InputDecoration? decoration,
+}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      if (title != null) ...[
+        Text(title, style: AppTextStyle.body),
+        10.height,
+      ],
+      DropdownButtonHideUnderline(
+        child: DropdownButtonFormField<String>(
+          dropdownColor: AppColors.scaffoldBackgroundColor,
+          isExpanded: false,
+          enableFeedback: true,
+          decoration: decoration,
+          focusNode: currentFocus,
+          borderRadius: BorderRadius.circular(commonRadius),
+          value: dropdownValue,
+          hint: hintText != null ? Text(hintText, style: AppTextStyle.body.copyWith(color: AppColors.greyTextColor)) : null,
+          items: dropDownList,
+          onChanged: onChanged!,
+          onTap: onTap,
+          onSaved: onSaved,
+          validator: validator,
+        ),
+      ),
+    ],
+  );
+}
+
 
 BoxDecoration commonContainerDecoration({bool? shadow, Color? color, Color? shadowColor, BorderRadiusGeometry? borderRadius, Color? borderColor, double? borderWidth, double? blurRadius, Gradient? gradient}) {
   return BoxDecoration(

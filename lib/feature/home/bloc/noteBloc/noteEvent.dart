@@ -18,3 +18,8 @@ class DeleteNote extends NoteEvent {
   final int id;
   DeleteNote(this.id);
 }
+
+class UpdateFilter extends NoteEvent {
+  final String filter;
+  UpdateFilter(this.filter);
+}

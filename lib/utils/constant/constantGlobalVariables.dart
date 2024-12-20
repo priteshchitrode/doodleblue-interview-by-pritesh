@@ -25,5 +25,8 @@ const String MSG = "msg";
 const String ADD = "ADD";
 const String UPDATE = "UPDATE";
 const String DELETE = "DELETE";
+const String ALL = "All";
+const String INCOMPLETE = "In Complete";
+const String COMPLETE = "Complete";
 
 

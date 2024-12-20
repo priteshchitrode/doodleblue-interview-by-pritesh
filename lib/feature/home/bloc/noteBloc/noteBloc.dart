@@ -13,6 +13,7 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
     on<AddNote>(_onAddTodo);
     on<UpdateNote>(_onUpdateTodo);
     on<DeleteNote>(_onDeleteTodo);
+    on<UpdateFilter>(_onUpdateFilter);
   }
 
   Future<void> _onLoadTodos(LoadNotes event, Emitter<NoteState> emit) async {
@@ -50,4 +51,14 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
       emit(NoteError(ErrorWithMessage( message: '$e' )));
     }
   }
+
+  void _onUpdateFilter(UpdateFilter event, Emitter<NoteState> emit) {
+    if (state is NoteSuccess) {
+      final currentState = state as NoteSuccess;
+      emit(NoteSuccess(currentState.todos, filter: event.filter));
+    }
+  }
+
+
+
 }

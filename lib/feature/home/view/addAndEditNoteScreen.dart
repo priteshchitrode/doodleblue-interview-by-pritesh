@@ -6,8 +6,11 @@ import 'package:doodleblue_interview_by_pritesh/utils/appButton.dart';
 import 'package:doodleblue_interview_by_pritesh/utils/appIcons.dart';
 import 'package:doodleblue_interview_by_pritesh/utils/appString.dart';
 import 'package:doodleblue_interview_by_pritesh/utils/appTextField.dart';
+import 'package:doodleblue_interview_by_pritesh/utils/appTextStyle.dart';
+import 'package:doodleblue_interview_by_pritesh/utils/commonWidgets.dart';
 import 'package:doodleblue_interview_by_pritesh/utils/constant/appColors.dart';
 import 'package:doodleblue_interview_by_pritesh/utils/constant/constantGlobalVariables.dart';
+import 'package:doodleblue_interview_by_pritesh/utils/customLog.dart';
 import 'package:doodleblue_interview_by_pritesh/utils/intExtensions.dart';
 import 'package:doodleblue_interview_by_pritesh/utils/widgetExtension.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +35,11 @@ class _AddAndEditNoteScreenState extends State<AddAndEditNoteScreen> {
   final titleFocusNode = FocusNode();
   final msgFocusNode = FocusNode();
 
+  final List<String> filterStatusList = [INCOMPLETE, COMPLETE];
+  String?  filterStatusValue = INCOMPLETE;
+
+  bool isCompleted = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -41,8 +49,12 @@ class _AddAndEditNoteScreenState extends State<AddAndEditNoteScreen> {
 
   void initFunction() => WidgetsBinding.instance.addPostFrameCallback((callback){
     if(widget.note != null){
+      CustomLog.debug(this, "${widget.note!.isCompleted}");
       titleTextController.text = widget.note!.title;
       msgTextController.text = widget.note!.description;
+      filterStatusValue = widget.note!.isCompleted ? COMPLETE : INCOMPLETE;
+      isCompleted = widget.note!.isCompleted;
+      setState(() {});
     }
   });
 
@@ -86,6 +98,30 @@ goBack(BuildContext context, String slag) => WidgetsBinding.instance.addPostFram
               maxLines: 5,
               labelText: AppString.label.message,
             ),
+            20.height,
+
+            commonDropdown(
+              title: AppString.label.taskStatus,
+              decoration: commonInputDecoration(
+                fillColor: Colors.white
+              ),
+              dropDownList: filterStatusList.map((label) => DropdownMenuItem(
+                value: label,
+                child: Text(label, style: AppTextStyle.body),
+              )).toList(),
+              dropdownValue: filterStatusValue,
+              onChanged: (value){
+                debugPrint("value : $value");
+                 filterStatusValue = value!;
+
+                 if(filterStatusValue == COMPLETE){
+                   isCompleted = true;
+                 }
+
+              },
+
+            ),
+
           ],
         ),
       ),
@@ -113,7 +149,7 @@ goBack(BuildContext context, String slag) => WidgetsBinding.instance.addPostFram
                       id: note.id,
                       title: titleTextController.text,
                       description: msgTextController.text,
-                      isCompleted: !note.isCompleted,
+                      isCompleted: isCompleted,
                   ),
               ));
               goBack(context, UPDATE);
@@ -122,6 +158,7 @@ goBack(BuildContext context, String slag) => WidgetsBinding.instance.addPostFram
                 NoteModel(
                   title: titleTextController.text,
                   description:  msgTextController.text,
+                  isCompleted: isCompleted,
                 ),
               ));
               goBack(context, ADD);

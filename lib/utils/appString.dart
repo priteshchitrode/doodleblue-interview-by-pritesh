@@ -16,10 +16,13 @@ class AppLabelText {
   final String update = "Update";
   final String edit = "Edit";
   final String save = "Save";
+  final String filter = "Filter";
   final String title = "Title";
   final String message = "Message";
   final String mobiles = "Mobiles";
   final String notes = "Notes";
+  final String selectFilter = "Select Filter";
+  final String taskStatus = "Task Status";
   final String noteAddedSuccessfully = "Note added successfully";
   final String noteDeleteSuccessfully = "Note delete successfully";
   final String noteUpdateSuccessfully = "Note update successfully";
