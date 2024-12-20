@@ -111,11 +111,12 @@ goBack(BuildContext context, String slag) => WidgetsBinding.instance.addPostFram
               )).toList(),
               dropdownValue: filterStatusValue,
               onChanged: (value){
-                debugPrint("value : $value");
                  filterStatusValue = value!;
 
                  if(filterStatusValue == COMPLETE){
                    isCompleted = true;
+                 } else {
+                   isCompleted = false;
                  }
 
               },
